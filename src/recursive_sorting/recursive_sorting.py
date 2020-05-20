@@ -1,26 +1,70 @@
 # TO-DO: complete the helper function below to merge 2 sorted arrays
-def merge(arrA, arrB):
-    elements = len(arrA) + len(arrB)
-    merged_arr = [0] * elements
+def merge(left, right):
+    # If the first array is empty, then nothing needs
+    # to be merged, and you can return the second array as the result
+    if len(left) == 0:
+        return right
 
-    # Your code here
+    # If the second array is empty, then nothing needs
+    # to be merged, and you can return the first array as the result
+    if len(right) == 0:
+        return left
+
+    result = []
+    index_left, index_right = 0, 0
+
+    # Now go through both arrays until all the elements
+    # make it into the resultant array
+    while len(result) < len(left) + len(right):
+        # The elements need to be sorted to add them to the
+        # resultant array, so you need to decide whether to get
+        # the next element from the first or the second array
+        if left[index_left] <= right[index_right]:
+            result.append(left[index_left])
+            index_left += 1
+        else:
+            result.append(right[index_right])
+            index_right += 1
+
+        # If you reach the end of either array, then you can
+        # add the remaining elements from the other array to
+        # the result and break the loop
+        if index_right == len(right):
+            result += left[index_left:]
+            break
+
+        if index_left == len(left):
+            result += right[index_right:]
+            break
+
+    return result
 
 
-    return merged_arr
+arr1 = [1, 2, 3, 12]
+arr2 = [5, 6, 7, 8]
+print(merge(arr1, arr2))
 
 
 # TO-DO: implement the Merge Sort function below USING RECURSION
-def merge_sort(arr):
-    # Your code here
+def merge_sort(array):
+    # If the input array contains fewer than two elements,
+    # then return it as the result of the function
+    if len(array) < 2:
+        return array
 
+    midpoint = len(array) // 2
 
-    return arr
+    # Sort the array by recursively splitting the input
+    # into two equal halves, sorting each half and merging them
+    # together into the final result
+    return merge(
+        left=merge_sort(array[:midpoint]),
+        right=merge_sort(array[midpoint:]))
 
 
 # implement an in-place merge sort algorithm
 def merge_in_place(arr, start, mid, end):
     # Your code here
-
 
     return arr
 
@@ -28,12 +72,12 @@ def merge_in_place(arr, start, mid, end):
 def merge_sort_in_place(arr, l, r):
     # Your code here
 
-
     return arr
 
 
 # STRETCH: implement the Timsort function below
-# hint: check out https://github.com/python/cpython/blob/master/Objects/listsort.txt
+# hint: check out
+# https://github.com/python/cpython/blob/master/Objects/listsort.txt
 def timsort(arr):
     # Your code here
 
